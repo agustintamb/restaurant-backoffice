@@ -4,12 +4,18 @@ import auth from '@/features/auth';
 import user from '@/features/user';
 import allergen from '@/features/allergen';
 import ingredient from '@/features/ingredient';
+import category from '@/features/category';
+import subcategory from '@/features/subcategory';
+//import dish from '@/features/dish';
 
 export const reducer = combineReducers({
   auth,
   user,
   allergen,
   ingredient,
+  category,
+  subcategory,
+  //dish,
 });
 
 const store = configureStore({

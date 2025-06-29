@@ -29,11 +29,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     const inputId = id || label?.toLowerCase().replace(/\s+/g, '-');
 
     const baseInputStyles = `
-      block rounded-md border-gray-300 shadow-sm
+      block rounded-md border-gray-300 shadow-sm h-10
       focus:border-primary-500 focus:ring focus:ring-primary-500 focus:ring-opacity-50
       disabled:opacity-70 disabled:cursor-not-allowed
-      transition duration-150 ease-in-out
-    `;
+      transition duration-150 ease-in-out`;
 
     const errorInputStyles = error
       ? 'border-error-500 focus:border-error-500 focus:ring-error-500'
