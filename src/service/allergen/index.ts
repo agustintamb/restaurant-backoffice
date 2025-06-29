@@ -1,0 +1,34 @@
+import { AxiosResponse } from 'axios';
+import ServiceBase from '@/service/ServiceBase';
+import {
+  IGetAllergensResponse,
+  IDeleteAllergenResponse,
+  IAllergenResponse,
+  GetAllergensQuery,
+  ICreateAllergen,
+  IUpdateAllergen,
+} from '@/interfaces/allergen';
+
+class AllergenService extends ServiceBase {
+  getAllergens = (params?: GetAllergensQuery) =>
+    this.client.get<ResponseType, AxiosResponse<IGetAllergensResponse>>('allergens', { params });
+
+  createAllergen = (data: ICreateAllergen) =>
+    this.client.post<ResponseType, AxiosResponse<IAllergenResponse>>('allergens', data);
+
+  updateAllergen = (allergenId: string, data: IUpdateAllergen) =>
+    this.client.put<ResponseType, AxiosResponse<IAllergenResponse>>(
+      `allergens/${allergenId}`,
+      data
+    );
+
+  deleteAllergen = (allergenId: string) =>
+    this.client.delete<ResponseType, AxiosResponse<IDeleteAllergenResponse>>(
+      `allergens/${allergenId}`
+    );
+
+  getAllergenById = (allergenId: string) =>
+    this.client.get<ResponseType, AxiosResponse<IAllergenResponse>>(`allergens/${allergenId}`);
+}
+
+export default new AllergenService();

@@ -32,6 +32,7 @@ const Modal = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
+          style={{ marginTop: 0 }}
           className="fixed inset-0 z-50 flex items-center justify-center px-4 sm:px-6 lg:px-8 bg-black bg-opacity-60 backdrop-blur-sm"
         >
           {/* Modal */}

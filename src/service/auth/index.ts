@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import ServiceBase from '@/service//ServiceBase';
+import ServiceBase from '@/service/ServiceBase';
 import { ILoginParams, ILoginResponse } from '@/interfaces/auth';
 
 class AuthService extends ServiceBase {

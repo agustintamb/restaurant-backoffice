@@ -10,15 +10,9 @@ interface BadgeProps {
   className?: string;
 }
 
-const Badge: React.FC<BadgeProps> = ({ 
-  variant = 'primary', 
-  size = 'md',
-  children, 
-  className = '' 
-}) => {
-  
+const Badge = ({ variant = 'primary', size = 'md', children, className = '' }: BadgeProps) => {
   const baseStyles = 'inline-flex items-center font-medium rounded-full';
-  
+
   const variantStyles = {
     primary: 'bg-primary-100 text-primary-800',
     secondary: 'bg-secondary-100 text-secondary-800',
@@ -28,13 +22,13 @@ const Badge: React.FC<BadgeProps> = ({
     info: 'bg-blue-100 text-blue-800',
     gray: 'bg-gray-100 text-gray-800',
   };
-  
+
   const sizeStyles = {
     sm: 'text-xs px-2 py-0.5',
     md: 'text-sm px-2.5 py-0.5',
     lg: 'text-base px-3 py-1',
   };
-  
+
   return (
     <span className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}>
       {children}

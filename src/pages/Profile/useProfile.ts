@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/app/store';
 import { useAuth } from '@/hooks/useAuth';
-import { IUpdateUserProfileParams } from '@/interfaces/user';
+import { IUpdateUserProfile } from '@/interfaces/user';
 import { updateUserProfile } from '@/features/user/asyncActions';
 
 interface IAdminProfileValues {
@@ -11,10 +11,10 @@ interface IAdminProfileValues {
   username: string;
 }
 
-export const useAdminProfile = () => {
+export const useProfile = () => {
   const dispatch: AppDispatch = useDispatch();
 
-  const { currentUser, isLoading, error } = useAuth();
+  const { currentUser, isLoading } = useAuth();
 
   const initialValues: IAdminProfileValues = {
     firstName: currentUser?.firstName || '',
@@ -24,7 +24,7 @@ export const useAdminProfile = () => {
   };
 
   const handleUpdateProfile = async (values: IAdminProfileValues) => {
-    const params: IUpdateUserProfileParams = {
+    const params: IUpdateUserProfile = {
       id: currentUser?._id || '',
       firstName: values.firstName,
       lastName: values.lastName,
@@ -37,7 +37,6 @@ export const useAdminProfile = () => {
   return {
     initialValues,
     isLoading,
-    error,
     handleUpdateProfile,
   };
 };

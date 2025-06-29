@@ -5,7 +5,7 @@ interface TooltipProps {
   children: React.ReactNode;
 }
 
-const Tooltip: React.FC<TooltipProps> = ({ text, children }) => {
+const Tooltip = ({ text, children }: TooltipProps) => {
   return (
     <span className="relative group cursor-pointer">
       {children}
@@ -16,4 +16,4 @@ const Tooltip: React.FC<TooltipProps> = ({ text, children }) => {
   );
 };
 
-export { Tooltip }; 
+export { Tooltip };
