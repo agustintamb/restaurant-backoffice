@@ -11,8 +11,8 @@ import Profile from '@/pages/Profile';
 import Users from '@/pages/Users';
 import Ingredients from '@/pages/Ingredients';
 import Allergens from '@/pages/Allergens';
-//import Categories from '@/pages/Categories';
-//import Subcategories from '@/pages/Subcategories';
+import Categories from '@/pages/Categories';
+import Subcategories from '@/pages/Subcategories';
 //import Dishes from '@/pages/Dishes';
 
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
@@ -44,8 +44,8 @@ export const routeConfig: RouteObject[] = [
       { path: 'usuarios', element: withSuspense(Users) },
       { path: 'ingredientes', element: withSuspense(Ingredients) },
       { path: 'alergenos', element: withSuspense(Allergens) },
-      //{ path: 'categorias', element: withSuspense(Categories) },
-      //{ path: 'subcategorias', element: withSuspense(Subcategories) },
+      { path: 'categorias', element: withSuspense(Categories) },
+      { path: 'subcategorias', element: withSuspense(Subcategories) },
       //{ path: 'platos', element: withSuspense(Dishes) },
     ],
   },
