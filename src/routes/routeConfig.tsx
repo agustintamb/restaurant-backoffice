@@ -39,7 +39,7 @@ export const routeConfig: RouteObject[] = [
       </PrivateRoute>
     ),
     children: [
-      { index: true, path: 'dashboard', element: withSuspense(Dashboard) },
+      { index: true, element: withSuspense(Dashboard) },
       { path: 'mi-perfil', element: withSuspense(Profile) },
       { path: 'usuarios', element: withSuspense(Users) },
       { path: 'ingredientes', element: withSuspense(Ingredients) },

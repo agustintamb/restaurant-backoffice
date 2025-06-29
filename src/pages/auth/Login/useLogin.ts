@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '@/app/store';
+import { ROUTES } from '@/utils/constants';
 import { useAuth } from '@/hooks/useAuth';
 import { login } from '@/features/auth/asyncActions';
 import { clearError, selectorAuth } from '@/features/auth/slice';
@@ -37,7 +38,7 @@ export const useLogin = () => {
   };
 
   useEffect(() => {
-    if (isAuthenticated) navigate('/dashboard');
+    if (isAuthenticated) navigate(ROUTES.DASHBOARD);
   }, [isAuthenticated, navigate]);
 
   useEffect(() => {

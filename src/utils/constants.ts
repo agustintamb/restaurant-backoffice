@@ -3,9 +3,13 @@ export const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export enum ROUTES {
   LOGIN = '/iniciar-sesion',
-  DASHBOARD = '/dashboard',
+  DASHBOARD = '/',
   PROFILE = '/mi-perfil',
   USERS = '/usuarios',
-  USER_DETAILS = '/usuarios/:id',
+  INGREDIENTS = '/ingredientes',
+  ALLERGENS = '/alergenos',
+  CATEGORIES = '/categorias',
+  SUBCATEGORIES = '/subcategorias',
+  DISHES = '/platos',
   NOT_FOUND = '/*',
 }
