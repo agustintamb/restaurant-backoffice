@@ -1,8 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Home, Users, Settings, Utensils } from 'lucide-react';
 import { ROUTES } from '@/utils/constants';
 import { MenuItem } from './header.interface';
+import {
+  Home,
+  Users,
+  Settings,
+  Utensils,
+  UtensilsCrossed,
+  WheatOff,
+  Salad,
+  Pizza,
+} from 'lucide-react';
 
 export const useHeader = () => {
   const location = useLocation();
@@ -28,16 +37,34 @@ export const useHeader = () => {
       path: '/usuarios',
     },
     {
-      id: 'categories',
-      label: 'Categorías',
-      icon: <Utensils size={20} />,
-      path: '/categorias',
+      id: 'ingredients',
+      label: 'Ingredientes',
+      icon: <Salad size={20} />,
+      path: '/ingredientes',
+    },
+    {
+      id: 'alergens',
+      label: 'Alérgenos',
+      icon: <WheatOff size={20} />,
+      path: '/alergenos',
     },
     {
       id: 'categories',
       label: 'Categorías',
       icon: <Utensils size={20} />,
       path: '/categorias',
+    },
+    {
+      id: 'subcategories',
+      label: 'Subcategorías',
+      icon: <UtensilsCrossed size={20} />,
+      path: '/subcategorias',
+    },
+    {
+      id: 'dishes',
+      label: 'Platos',
+      icon: <Pizza size={20} />,
+      path: '/platos',
     },
   ];
 

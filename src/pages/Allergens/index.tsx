@@ -1,0 +1,215 @@
+import { Edit, Trash2, Plus, Search, Eye } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { useAllergens } from './useAllergens';
+import Table, { TableColumn, TableAction } from '@/components/ui/Table';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
+import Switch from '@/components/ui/Switch';
+import AllergenCreateModal from './components/AllergenCreateModal';
+import AllergenEditModal from './components/AllergenEditModal';
+import ActivityModal from '@/components/ActivityModal';
+import ConfirmationModal from '@/components/ConfirmationModal';
+import { IAllergen } from '@/interfaces/allergen';
+
+const Allergens = () => {
+  const { currentUser } = useAuth();
+  const {
+    allergens,
+    isLoading,
+    paginationProps,
+    searchQuery,
+    includeDeleted,
+    handleSearch,
+    handleIncludeDeletedChange,
+    handleCreateAllergen,
+    handleEditAllergen,
+    handleDeleteAllergen,
+    handleShowActivity,
+    handleCreateAllergenSubmit,
+    handleUpdateAllergen,
+    confirmDeleteAllergen,
+    isCreateModalOpen,
+    isEditModalOpen,
+    isDeleteModalOpen,
+    isActivityModalOpen,
+    selectedAllergen,
+    closeCreateModal,
+    closeEditModal,
+    closeDeleteModal,
+    closeActivityModal,
+  } = useAllergens();
+
+  if (!currentUser) {
+    return (
+      <div className="text-center py-10">
+        <p>Cargando perfil...</p>
+      </div>
+    );
+  }
+
+  // Allergen table columns
+  const columns: TableColumn<IAllergen>[] = [
+    {
+      key: 'name',
+      title: 'Nombre',
+      render: value => (
+        <div className="flex items-center">
+          <div className="flex-shrink-0 h-8 w-8 bg-orange-100 rounded-full flex items-center justify-center mr-3">
+            <span className="text-xs font-medium text-orange-600">
+              {value?.charAt(0)?.toUpperCase()}
+            </span>
+          </div>
+          <span className="text-sm font-medium text-gray-900">{value}</span>
+        </div>
+      ),
+    },
+    {
+      key: 'createdAt',
+      title: 'Fecha de Creación',
+      render: value => {
+        if (!value) return '-';
+        return new Date(value).toLocaleDateString('es-ES', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+        });
+      },
+    },
+    {
+      key: 'lastActivity',
+      title: 'Actividad',
+      render: (_, record) => (
+        <div className="flex justify-start">
+          <button
+            onClick={() => handleShowActivity(record)}
+            className="p-1 text-gray-400 hover:text-blue-600 transition-colors"
+            title="Ver detalles de actividad"
+          >
+            <Eye size={14} />
+          </button>
+        </div>
+      ),
+    },
+    {
+      key: 'isDeleted',
+      title: 'Estado',
+      render: value => (
+        <span
+          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+            value ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+          }`}
+        >
+          {value ? 'Eliminado' : 'Activo'}
+        </span>
+      ),
+    },
+  ];
+
+  // Allergen actions
+  const actions: TableAction<IAllergen>[] = [
+    {
+      key: 'edit',
+      label: 'Editar',
+      icon: <Edit size={16} />,
+      onClick: handleEditAllergen,
+      variant: 'primary',
+      show: record => !record.isDeleted,
+    },
+    {
+      key: 'delete',
+      label: 'Eliminar',
+      icon: <Trash2 size={16} />,
+      onClick: handleDeleteAllergen,
+      variant: 'danger',
+      show: record => !record.isDeleted,
+    },
+  ];
+
+  return (
+    <div className="space-y-6 pb-16 md:pb-0">
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+          <h1 className="text-2xl font-bold text-gray-900">Administración de alérgenos</h1>
+          <Button variant="primary" icon={<Plus size={20} />} onClick={handleCreateAllergen}>
+            Nuevo Alérgeno
+          </Button>
+        </div>
+
+        {/* Filters bar */}
+        <div className="mb-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+          {/* Search input */}
+          <div className="flex-1 max-w-md">
+            <Input
+              type="text"
+              placeholder="Buscar alérgenos..."
+              value={searchQuery}
+              onChange={e => handleSearch(e.target.value)}
+              icon={<Search size={18} />}
+              fullWidth
+            />
+          </div>
+
+          {/* Include deleted switch */}
+          <div className="flex items-center">
+            <Switch
+              checked={includeDeleted}
+              onChange={handleIncludeDeletedChange}
+              label="Incluir eliminados"
+              size="md"
+            />
+          </div>
+        </div>
+
+        {/* Allergens table */}
+        <Table
+          data={allergens}
+          columns={columns}
+          actions={actions}
+          loading={isLoading}
+          pagination={paginationProps}
+          emptyMessage="No se encontraron alérgenos"
+          rowKey="_id"
+        />
+      </div>
+
+      {/* Create Allergen Modal */}
+      <AllergenCreateModal
+        open={isCreateModalOpen}
+        onClose={closeCreateModal}
+        onCreate={handleCreateAllergenSubmit}
+        isLoading={isLoading}
+      />
+
+      {/* Edit Allergen Modal */}
+      <AllergenEditModal
+        open={isEditModalOpen}
+        onClose={closeEditModal}
+        allergen={selectedAllergen}
+        onUpdate={handleUpdateAllergen}
+        isLoading={isLoading}
+      />
+
+      {/* Allergen Activity Modal */}
+      <ActivityModal
+        open={isActivityModalOpen}
+        onClose={closeActivityModal}
+        entity={selectedAllergen}
+      />
+
+      {/* Delete Confirmation Modal */}
+      <ConfirmationModal
+        open={isDeleteModalOpen}
+        onClose={closeDeleteModal}
+        onConfirm={confirmDeleteAllergen}
+        title="¿Eliminar alérgeno?"
+        message={`¿Estás seguro de que querés eliminar este alérgeno? Esta acción no se puede deshacer.`}
+        confirmText="Eliminar"
+        cancelText="Cancelar"
+        type="danger"
+        isLoading={isLoading}
+      />
+    </div>
+  );
+};
+
+export default Allergens;

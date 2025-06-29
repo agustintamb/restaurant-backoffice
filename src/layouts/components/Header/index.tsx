@@ -9,39 +9,31 @@ import MobileMenu from './MobileMenu';
 const Header = () => {
   const { currentUser, handleLogout } = useAuth();
   const { isMobileMenuOpen, handleMobileMenuToggle, handleMobileMenuClose } = useHeader();
-
   return (
     <>
       <header className="bg-gray-50 fixed top-0 left-0 w-full z-50 border-b border-gray-200">
         <nav className="px-4 sm:px-6 py-4">
           <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              {/* Botón hamburguesa */}
-              <button
-                onClick={handleMobileMenuToggle}
-                className="p-2 rounded-md text-gray-700 hover:text-primary-600 hover:bg-gray-100 transition-colors mr-3"
-                aria-label="Abrir menú"
-              >
-                <Menu size={24} />
-              </button>
+            {/*<div className="flex items-center">*/}
+            {/* Botón hamburguesa */}
+            <button
+              onClick={handleMobileMenuToggle}
+              className="p-2 rounded-md text-gray-700 hover:text-primary-600 hover:bg-gray-100 transition-colors mr-3"
+              aria-label="Abrir menú"
+            >
+              <Menu size={24} />
+            </button>
 
-              {/* Logo */}
-              <Link
-                to={ROUTES.DASHBOARD || '/dashboard'}
-                className="flex items-center text-primary-600 font-semibold gap-2"
-              >
-                <ChefHat size={24} />
-                <span className="text-xl">Bodegón Argentino</span>
-              </Link>
-            </div>
-
-            {/* Desktop - Solo saludo */}
-            <div className="flex items-center">
-              <span className="hidden sm:block text-sm font-medium text-gray-700">
-                Bienvenido, {currentUser?.firstName || 'Usuario'}
-              </span>
-            </div>
+            {/* Logo */}
+            <Link
+              to={ROUTES.DASHBOARD}
+              className="flex items-center text-primary-600 font-semibold gap-2"
+            >
+              <span className="text-xl">Bodegón Argentino</span>
+              <ChefHat size={24} />
+            </Link>
           </div>
+          {/*</div>*/}
         </nav>
       </header>
 

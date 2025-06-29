@@ -46,10 +46,13 @@ export default abstract class ServiceBase {
             'token es inválido o ha expirado',
             'usuario no encontrado',
             'usuario deshabilitado',
+            'usuario eliminado',
           ];
 
+          console.error('Error de autenticación:', errorMessage);
+
           const shouldLogout =
-            logoutCases.some(logoutCase => errorMessage.includes(logoutCase)) ||
+            logoutCases.some(logoutCase => errorMessage.includes(logoutCase.toLowerCase())) ||
             !localStorage.getItem('token');
 
           const isLoginPage = location.pathname === ROUTES.LOGIN;

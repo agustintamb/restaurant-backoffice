@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ILoginParams, IRegisterParams, IRecoverPasswordParams } from '@/interfaces/auth';
+import { ILoginParams } from '@/interfaces/auth';
 import { isAxiosError } from '@/utils/isAxiosError';
 import Auth from '@/service/auth';
 
@@ -9,9 +9,7 @@ export const login = createAsyncThunk(
     try {
       const { data } = await Auth.login(params);
       const token = data?.result?.token;
-      if (token) {
-        localStorage.setItem('token', token);
-      }
+      if (token) localStorage.setItem('token', token);
       return data;
     } catch (error) {
       if (isAxiosError(error)) return rejectWithValue(error);
@@ -25,7 +23,6 @@ export const validateToken = createAsyncThunk(
   async (params: { token: string }, { rejectWithValue }) => {
     try {
       const { data } = await Auth.validateToken(params);
-
       return data;
     } catch (error) {
       // Limpiar token inválido

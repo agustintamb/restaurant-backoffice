@@ -1,11 +1,8 @@
-import React from 'react';
 import { useAuth } from '@/hooks/useAuth';
 
-const Dashboard: React.FC = () => {
+const Dashboard = () => {
   const { currentUser } = useAuth();
-
   if (!currentUser) return null;
-
   return (
     <div className="space-y-8 pb-16 md:pb-0">
       {/* Welcome section */}
