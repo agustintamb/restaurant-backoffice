@@ -1,4 +1,15 @@
-import { Edit, Trash2, Plus, Search, Eye, ChefHat, Filter, Tag, Utensils } from 'lucide-react';
+import {
+  Edit,
+  Trash2,
+  Plus,
+  Search,
+  Eye,
+  ChefHat,
+  Filter,
+  Tag,
+  Utensils,
+  RotateCcw,
+} from 'lucide-react';
 import { IDish } from '@/interfaces/dish';
 import { useAuth } from '@/hooks/useAuth';
 import { useDishes } from './useDishes';
@@ -32,18 +43,22 @@ const Dishes = () => {
     handleCreateDish,
     handleEditDish,
     handleDeleteDish,
+    handleRestoreDish,
     handleShowActivity,
     handleCreateDishSubmit,
     handleUpdateDish,
     confirmDeleteDish,
+    confirmRestoreDish,
     isCreateModalOpen,
     isEditModalOpen,
     isDeleteModalOpen,
+    isRestoreModalOpen,
     isActivityModalOpen,
     selectedDish,
     closeCreateModal,
     closeEditModal,
     closeDeleteModal,
+    closeRestoreModal,
     closeActivityModal,
   } = useDishes();
 
@@ -122,19 +137,6 @@ const Dishes = () => {
         );
       },
     },
-    //{
-    //  key: 'subcategory',
-    //  title: 'Subcategoría',
-    //  render: value => {
-    //    if (!value) return '-';
-    //    const subcategoryName = typeof value === 'string' ? value : value.name;
-    //    return (
-    //      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-    //        {subcategoryName}
-    //      </span>
-    //    );
-    //  },
-    //},
     {
       key: 'ingredients',
       title: 'Ingredientes',
@@ -224,6 +226,14 @@ const Dishes = () => {
       onClick: handleEditDish,
       variant: 'primary',
       show: record => !record.isDeleted,
+    },
+    {
+      key: 'restore',
+      label: 'Restaurar',
+      icon: <RotateCcw size={16} />,
+      onClick: handleRestoreDish,
+      variant: 'success',
+      show: record => record.isDeleted,
     },
     {
       key: 'delete',
@@ -344,6 +354,19 @@ const Dishes = () => {
         open={isActivityModalOpen}
         onClose={closeActivityModal}
         entity={selectedDish}
+      />
+
+      {/* Restore Confirmation Modal */}
+      <ConfirmationModal
+        open={isRestoreModalOpen}
+        onClose={closeRestoreModal}
+        onConfirm={confirmRestoreDish}
+        title="¿Restaurar plato?"
+        message={`¿Estás seguro de que querés restaurar este plato? El elemento volverá a estar disponible.`}
+        confirmText="Restaurar"
+        cancelText="Cancelar"
+        type="info"
+        isLoading={isLoading}
       />
 
       {/* Delete Confirmation Modal */}

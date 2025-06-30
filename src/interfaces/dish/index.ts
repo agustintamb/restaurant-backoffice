@@ -20,6 +20,8 @@ export interface IDish {
   updatedAt: Date;
   deletedBy?: IUser | string;
   deletedAt?: Date;
+  restoredBy?: IUser | string;
+  restoredAt?: Date;
   isDeleted: boolean;
 }
 
@@ -37,7 +39,7 @@ export interface ICreateDish {
   name: string;
   description: string;
   price: number;
-  image?: string | File;
+  image?: string;
   categoryId: string;
   subcategoryId?: string;
   ingredientIds: string[];
@@ -48,7 +50,7 @@ export interface IUpdateDish {
   name?: string;
   description?: string;
   price?: number;
-  image?: string | File;
+  image?: string;
   categoryId?: string;
   subcategoryId?: string;
   ingredientIds?: string[];
@@ -76,4 +78,9 @@ export interface PaginatedDishesResult {
 
 export interface IDeleteDishResponse {
   message: string;
+}
+
+export interface IRestoreDishResponse {
+  message: string;
+  result: IDish;
 }

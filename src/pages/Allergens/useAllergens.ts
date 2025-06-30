@@ -7,6 +7,7 @@ import {
   createAllergen,
   updateAllergen,
   deleteAllergen,
+  restoreAllergen,
 } from '@/features/allergen/asyncActions';
 import {
   GetAllergensQuery,
@@ -23,6 +24,7 @@ export const useAllergens = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isRestoreModalOpen, setIsRestoreModalOpen] = useState(false);
   const [isActivityModalOpen, setIsActivityModalOpen] = useState(false);
   const [selectedAllergen, setSelectedAllergen] = useState<IAllergen | null>(null);
 
@@ -92,6 +94,24 @@ export const useAllergens = () => {
     fetchAllergens();
   };
 
+  const handleRestoreAllergen = (allergen: IAllergen) => {
+    setSelectedAllergen(allergen);
+    setIsRestoreModalOpen(true);
+  };
+
+  const confirmRestoreAllergen = async () => {
+    if (!selectedAllergen) return;
+    await dispatch(restoreAllergen(selectedAllergen._id)).unwrap();
+    setIsRestoreModalOpen(false);
+    setSelectedAllergen(null);
+    fetchAllergens();
+  };
+
+  const closeRestoreModal = () => {
+    setIsRestoreModalOpen(false);
+    setSelectedAllergen(null);
+  };
+
   const confirmDeleteAllergen = async () => {
     if (!selectedAllergen) return;
     await dispatch(deleteAllergen(selectedAllergen._id)).unwrap();
@@ -153,21 +173,25 @@ export const useAllergens = () => {
     handleCreateAllergen,
     handleEditAllergen,
     handleDeleteAllergen,
+    handleRestoreAllergen,
     handleShowActivity,
     handleCreateAllergenSubmit,
     handleUpdateAllergen,
     confirmDeleteAllergen,
+    confirmRestoreAllergen,
     refreshAllergens,
 
     // Modal states
     isCreateModalOpen,
     isEditModalOpen,
     isDeleteModalOpen,
+    isRestoreModalOpen,
     isActivityModalOpen,
     selectedAllergen,
     closeCreateModal,
     closeEditModal,
     closeDeleteModal,
+    closeRestoreModal,
     closeActivityModal,
   };
 };

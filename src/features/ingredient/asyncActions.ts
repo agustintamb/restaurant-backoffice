@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { isAxiosError } from '@/utils/isAxiosError';
+import { errorMessage } from '@/utils/errorMessage';
 import { GetIngredientsQuery, ICreateIngredient, IUpdateIngredient } from '@/interfaces/ingredient';
 import Ingredient from '@/service/ingredient';
 
@@ -25,6 +26,7 @@ export const createIngredient = createAsyncThunk(
       if (data) toast.success('Ingrediente creado');
       return data.result;
     } catch (error) {
+      toast.error(errorMessage(error));
       if (isAxiosError(error)) return rejectWithValue(error.response?.data);
       return rejectWithValue('An unexpected error occurred');
     }
@@ -42,6 +44,7 @@ export const updateIngredient = createAsyncThunk(
       if (data) toast.success('Ingrediente actualizado');
       return data.result;
     } catch (error) {
+      toast.error(errorMessage(error));
       if (isAxiosError(error)) return rejectWithValue(error.response?.data);
       return rejectWithValue('An unexpected error occurred');
     }
@@ -56,6 +59,22 @@ export const deleteIngredient = createAsyncThunk(
       if (data) toast.success('Ingrediente eliminado');
       return ingredientId;
     } catch (error) {
+      toast.error(errorMessage(error));
+      if (isAxiosError(error)) return rejectWithValue(error.response?.data);
+      return rejectWithValue('An unexpected error occurred');
+    }
+  }
+);
+
+export const restoreIngredient = createAsyncThunk(
+  'ingredient/restoreIngredient',
+  async (ingredientId: string, { rejectWithValue }) => {
+    try {
+      const { data } = await Ingredient.restoreIngredient(ingredientId);
+      if (data) toast.success('Ingrediente restaurado exitosamente');
+      return data.result;
+    } catch (error) {
+      toast.error(errorMessage(error));
       if (isAxiosError(error)) return rejectWithValue(error.response?.data);
       return rejectWithValue('An unexpected error occurred');
     }

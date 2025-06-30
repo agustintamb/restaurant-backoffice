@@ -9,6 +9,8 @@ export interface IIngredient {
   updatedAt: Date;
   deletedBy?: IUser | string;
   deletedAt?: Date;
+  restoredBy?: IUser | string;
+  restoredAt?: Date;
   isDeleted: boolean;
 }
 
@@ -48,4 +50,9 @@ export interface PaginatedIngredientsResult {
 
 export interface IDeleteIngredientResponse {
   message: string;
+}
+
+export interface IRestoreIngredientResponse {
+  message: string;
+  result: IIngredient;
 }

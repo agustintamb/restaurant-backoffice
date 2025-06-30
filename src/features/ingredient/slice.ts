@@ -7,6 +7,7 @@ import {
   updateIngredient,
   deleteIngredient,
   getIngredientById,
+  restoreIngredient,
 } from './asyncActions';
 
 interface IngredientState {
@@ -119,6 +120,30 @@ const ingredientSlice = createSlice({
       .addCase(deleteIngredient.rejected, (state, action) => {
         state.isLoading = false;
         state.error = (action.payload as string) || 'Error al eliminar ingrediente';
+      });
+
+    // Restore Ingredient
+    builder
+      .addCase(restoreIngredient.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(restoreIngredient.fulfilled, (state, action: PayloadAction<IIngredient>) => {
+        state.isLoading = false;
+        // Actualizar en la lista si existe
+        if (state.ingredientsData) {
+          const index = state.ingredientsData.ingredients.findIndex(
+            ingredient => ingredient._id === action.payload._id
+          );
+          if (index !== -1) {
+            state.ingredientsData.ingredients[index] = action.payload;
+          }
+        }
+        state.error = null;
+      })
+      .addCase(restoreIngredient.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = (action.payload as string) || 'Error al restaurar ingrediente';
       });
 
     // Get Ingredient By Id

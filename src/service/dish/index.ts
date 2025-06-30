@@ -1,10 +1,10 @@
-// src/service/dish/index.ts
 import { AxiosResponse } from 'axios';
 import ServiceBase from '@/service/ServiceBase';
 import {
   IGetDishesResponse,
   IDeleteDishResponse,
   IDishResponse,
+  IRestoreDishResponse,
   GetDishesQuery,
   ICreateDish,
   IUpdateDish,
@@ -82,6 +82,11 @@ class DishService extends ServiceBase {
 
   deleteDish = (dishId: string) =>
     this.client.delete<ResponseType, AxiosResponse<IDeleteDishResponse>>(`dishes/${dishId}`);
+
+  restoreDish = (dishId: string) =>
+    this.client.patch<ResponseType, AxiosResponse<IRestoreDishResponse>>(
+      `dishes/${dishId}/restore`
+    );
 
   getDishById = (dishId: string) =>
     this.client.get<ResponseType, AxiosResponse<IDishResponse>>(`dishes/${dishId}`);

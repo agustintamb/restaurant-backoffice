@@ -1,7 +1,7 @@
 import { RootState } from '@/app/store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IDish, PaginatedDishesResult } from '@/interfaces/dish';
-import { getDishes, createDish, updateDish, deleteDish, getDishById } from './asyncActions';
+import { getDishes, createDish, updateDish, deleteDish, getDishById, restoreDish } from './asyncActions';
 
 interface DishState {
   dishesData: PaginatedDishesResult | null;
@@ -106,6 +106,28 @@ const dishSlice = createSlice({
       .addCase(deleteDish.rejected, (state, action) => {
         state.isLoading = false;
         state.error = (action.payload as string) || 'Error al eliminar plato';
+      });
+
+    // Restore Dish
+    builder
+      .addCase(restoreDish.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(restoreDish.fulfilled, (state, action: PayloadAction<IDish>) => {
+        state.isLoading = false;
+        // Actualizar en la lista si existe
+        if (state.dishesData) {
+          const index = state.dishesData.dishes.findIndex(dish => dish._id === action.payload._id);
+          if (index !== -1) {
+            state.dishesData.dishes[index] = action.payload;
+          }
+        }
+        state.error = null;
+      })
+      .addCase(restoreDish.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = (action.payload as string) || 'Error al restaurar plato';
       });
 
     // Get Dish By Id

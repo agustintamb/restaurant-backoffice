@@ -6,6 +6,7 @@ import {
   createCategory,
   updateCategory,
   deleteCategory,
+  restoreCategory,
 } from '@/features/category/asyncActions';
 import {
   GetCategoriesQuery,
@@ -23,6 +24,7 @@ export const useCategories = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isRestoreModalOpen, setIsRestoreModalOpen] = useState(false);
   const [isActivityModalOpen, setIsActivityModalOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<ICategory | null>(null);
 
@@ -118,6 +120,24 @@ export const useCategories = () => {
     setSelectedCategory(null);
   };
 
+  const handleRestoreCategory = (category: ICategory) => {
+    setSelectedCategory(category);
+    setIsRestoreModalOpen(true);
+  };
+
+  const confirmRestoreCategory = async () => {
+    if (!selectedCategory) return;
+    await dispatch(restoreCategory(selectedCategory._id)).unwrap();
+    setIsRestoreModalOpen(false);
+    setSelectedCategory(null);
+    fetchCategories();
+  };
+
+  const closeRestoreModal = () => {
+    setIsRestoreModalOpen(false);
+    setSelectedCategory(null);
+  };
+
   const refreshCategories = () => fetchCategories();
 
   useEffect(() => {
@@ -153,21 +173,25 @@ export const useCategories = () => {
     handleCreateCategory,
     handleEditCategory,
     handleDeleteCategory,
+    handleRestoreCategory,
     handleShowActivity,
     handleCreateCategorySubmit,
     handleUpdateCategory,
     confirmDeleteCategory,
+    confirmRestoreCategory,
     refreshCategories,
 
     // Modal states
     isCreateModalOpen,
     isEditModalOpen,
     isDeleteModalOpen,
+    isRestoreModalOpen,
     isActivityModalOpen,
     selectedCategory,
     closeCreateModal,
     closeEditModal,
     closeDeleteModal,
+    closeRestoreModal,
     closeActivityModal,
   };
 };

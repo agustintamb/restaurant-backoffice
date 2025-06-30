@@ -7,6 +7,7 @@ import {
   updateSubcategory,
   deleteSubcategory,
   getSubcategoryById,
+  restoreSubcategory,
 } from './asyncActions';
 
 interface SubcategoryState {
@@ -119,6 +120,30 @@ const subcategorySlice = createSlice({
       .addCase(deleteSubcategory.rejected, (state, action) => {
         state.isLoading = false;
         state.error = (action.payload as string) || 'Error al eliminar subcategoría';
+      });
+
+    // Restore Subcategory
+    builder
+      .addCase(restoreSubcategory.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(restoreSubcategory.fulfilled, (state, action: PayloadAction<ISubcategory>) => {
+        state.isLoading = false;
+        // Actualizar en la lista si existe
+        if (state.subcategoriesData) {
+          const index = state.subcategoriesData.subcategories.findIndex(
+            subcategory => subcategory._id === action.payload._id
+          );
+          if (index !== -1) {
+            state.subcategoriesData.subcategories[index] = action.payload;
+          }
+        }
+        state.error = null;
+      })
+      .addCase(restoreSubcategory.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = (action.payload as string) || 'Error al restaurar subcategoría';
       });
 
     // Get Subcategory By Id

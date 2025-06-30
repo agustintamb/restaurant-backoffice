@@ -9,6 +9,8 @@ export interface IAllergen {
   updatedAt: Date;
   deletedBy?: IUser | string;
   deletedAt?: Date;
+  restoredBy?: IUser | string;
+  restoredAt?: Date;
   isDeleted: boolean;
 }
 
@@ -48,4 +50,9 @@ export interface PaginatedAllergensResult {
 
 export interface IDeleteAllergenResponse {
   message: string;
+}
+
+export interface IRestoreAllergenResponse {
+  message: string;
+  result: IAllergen;
 }

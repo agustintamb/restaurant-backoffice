@@ -7,6 +7,7 @@ import {
   updateAllergen,
   deleteAllergen,
   getAllergenById,
+  restoreAllergen,
 } from './asyncActions';
 
 interface AllergenState {
@@ -132,6 +133,30 @@ const allergenSlice = createSlice({
       .addCase(getAllergenById.rejected, (state, action) => {
         state.isLoading = false;
         state.error = (action.payload as string) || 'Error al cargar alérgeno';
+      });
+
+    // Restore Allergen
+    builder
+      .addCase(restoreAllergen.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(restoreAllergen.fulfilled, (state, action: PayloadAction<IAllergen>) => {
+        state.isLoading = false;
+        // Actualizar en la lista si existe
+        if (state.allergensData) {
+          const index = state.allergensData.allergens.findIndex(
+            allergen => allergen._id === action.payload._id
+          );
+          if (index !== -1) {
+            state.allergensData.allergens[index] = action.payload;
+          }
+        }
+        state.error = null;
+      })
+      .addCase(restoreAllergen.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = (action.payload as string) || 'Error al restaurar alérgeno';
       });
   },
 });

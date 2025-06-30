@@ -1,4 +1,4 @@
-import { Edit, Trash2, Plus, Search, Eye } from 'lucide-react';
+import { Edit, Trash2, Plus, Search, Eye, RotateCcw } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useAllergens } from './useAllergens';
 import Table, { TableColumn, TableAction } from '@/components/ui/Table';
@@ -24,18 +24,22 @@ const Allergens = () => {
     handleCreateAllergen,
     handleEditAllergen,
     handleDeleteAllergen,
+    handleRestoreAllergen,
     handleShowActivity,
     handleCreateAllergenSubmit,
     handleUpdateAllergen,
     confirmDeleteAllergen,
+    confirmRestoreAllergen,
     isCreateModalOpen,
     isEditModalOpen,
     isDeleteModalOpen,
+    isRestoreModalOpen,
     isActivityModalOpen,
     selectedAllergen,
     closeCreateModal,
     closeEditModal,
     closeDeleteModal,
+    closeRestoreModal,
     closeActivityModal,
   } = useAllergens();
 
@@ -82,7 +86,7 @@ const Allergens = () => {
         <div className="flex justify-start">
           <button
             onClick={() => handleShowActivity(record)}
-            className="p-1 text-gray-400 hover:text-blue-600 transition-colors"
+            className="p-1 text-gray-400 hover:text-primary-600 transition-colors"
             title="Ver detalles de actividad"
           >
             <Eye size={14} />
@@ -114,6 +118,14 @@ const Allergens = () => {
       onClick: handleEditAllergen,
       variant: 'primary',
       show: record => !record.isDeleted,
+    },
+    {
+      key: 'restore',
+      label: 'Restaurar',
+      icon: <RotateCcw size={16} />,
+      onClick: handleRestoreAllergen,
+      variant: 'success',
+      show: record => record.isDeleted,
     },
     {
       key: 'delete',
@@ -194,6 +206,18 @@ const Allergens = () => {
         open={isActivityModalOpen}
         onClose={closeActivityModal}
         entity={selectedAllergen}
+      />
+
+      <ConfirmationModal
+        open={isRestoreModalOpen}
+        onClose={closeRestoreModal}
+        onConfirm={confirmRestoreAllergen}
+        title="¿Restaurar alérgeno?"
+        message={`¿Estás seguro de que querés restaurar este alérgeno? El elemento volverá a estar disponible.`}
+        confirmText="Restaurar"
+        cancelText="Cancelar"
+        type="info"
+        isLoading={isLoading}
       />
 
       {/* Delete Confirmation Modal */}

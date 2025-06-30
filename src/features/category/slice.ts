@@ -7,6 +7,7 @@ import {
   updateCategory,
   deleteCategory,
   getCategoryById,
+  restoreCategory,
 } from './asyncActions';
 
 interface CategoryState {
@@ -119,6 +120,30 @@ const categorySlice = createSlice({
       .addCase(deleteCategory.rejected, (state, action) => {
         state.isLoading = false;
         state.error = (action.payload as string) || 'Error al eliminar categoría';
+      });
+
+    // Restore Category
+    builder
+      .addCase(restoreCategory.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(restoreCategory.fulfilled, (state, action: PayloadAction<ICategory>) => {
+        state.isLoading = false;
+        // Actualizar en la lista si existe
+        if (state.categoriesData) {
+          const index = state.categoriesData.categories.findIndex(
+            category => category._id === action.payload._id
+          );
+          if (index !== -1) {
+            state.categoriesData.categories[index] = action.payload;
+          }
+        }
+        state.error = null;
+      })
+      .addCase(restoreCategory.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = (action.payload as string) || 'Error al restaurar categoría';
       });
 
     // Get Category By Id

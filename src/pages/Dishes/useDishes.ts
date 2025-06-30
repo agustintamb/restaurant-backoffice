@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '@/app/store';
-import { getDishes, createDish, updateDish, deleteDish } from '@/features/dish/asyncActions';
+import { getDishes, createDish, updateDish, deleteDish, restoreDish } from '@/features/dish/asyncActions';
 import { getCategories } from '@/features/category/asyncActions';
 import { getSubcategories } from '@/features/subcategory/asyncActions';
 import { GetDishesQuery, ICreateDish, IUpdateDish, IDish } from '@/interfaces/dish';
@@ -19,6 +19,7 @@ export const useDishes = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isRestoreModalOpen, setIsRestoreModalOpen] = useState(false);
   const [isActivityModalOpen, setIsActivityModalOpen] = useState(false);
   const [selectedDish, setSelectedDish] = useState<IDish | null>(null);
 
@@ -157,6 +158,24 @@ export const useDishes = () => {
     setSelectedDish(null);
   };
 
+  const handleRestoreDish = (dish: IDish) => {
+    setSelectedDish(dish);
+    setIsRestoreModalOpen(true);
+  };
+
+  const confirmRestoreDish = async () => {
+    if (!selectedDish) return;
+    await dispatch(restoreDish(selectedDish._id)).unwrap();
+    setIsRestoreModalOpen(false);
+    setSelectedDish(null);
+    fetchDishes();
+  };
+
+  const closeRestoreModal = () => {
+    setIsRestoreModalOpen(false);
+    setSelectedDish(null);
+  };
+
   const refreshDishes = () => fetchDishes();
 
   useEffect(() => {
@@ -206,21 +225,25 @@ export const useDishes = () => {
     handleCreateDish,
     handleEditDish,
     handleDeleteDish,
+    handleRestoreDish,
     handleShowActivity,
     handleCreateDishSubmit,
     handleUpdateDish,
     confirmDeleteDish,
+    confirmRestoreDish,
     refreshDishes,
 
     // Modal states
     isCreateModalOpen,
     isEditModalOpen,
     isDeleteModalOpen,
+    isRestoreModalOpen,
     isActivityModalOpen,
     selectedDish,
     closeCreateModal,
     closeEditModal,
     closeDeleteModal,
+    closeRestoreModal,
     closeActivityModal,
   };
 };

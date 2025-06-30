@@ -11,6 +11,8 @@ export interface ICategory {
   updatedAt: Date;
   deletedBy?: IUser | string;
   deletedAt?: Date;
+  restoredBy?: IUser | string;
+  restoredAt?: Date;
   isDeleted: boolean;
 }
 
@@ -51,4 +53,9 @@ export interface PaginatedCategoriesResult {
 
 export interface IDeleteCategoryResponse {
   message: string;
+}
+
+export interface IRestoreCategoryResponse {
+  message: string;
+  result: ICategory;
 }
