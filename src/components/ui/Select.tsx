@@ -89,7 +89,7 @@ const Select: React.FC<SelectProps> = ({
           ${
             error
               ? 'border-red-300 focus-within:border-red-500 focus-within:ring-red-200'
-              : 'border-gray-300 focus-within:border-blue-500 focus-within:ring-blue-200'
+              : 'border-gray-300 focus-within:border-primary-500 focus-within:ring-primary-200'
           }
           ${isOpen ? 'focus-within:ring-2' : ''}
         `}
@@ -127,7 +127,7 @@ const Select: React.FC<SelectProps> = ({
               onChange={e => setSearchTerm(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Buscar..."
-              className="w-full rounded border-gray-300 px-2 py-1 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-200"
+              className="w-full rounded border-gray-300 px-2 py-1 text-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-200"
             />
           </div>
 
@@ -147,7 +147,7 @@ const Select: React.FC<SelectProps> = ({
                       cursor-pointer px-3 py-2 text-sm transition-colors
                       ${
                         isSelected
-                          ? 'bg-blue-50 text-blue-900 font-medium'
+                          ? 'bg-primary-50 text-primary-900 font-medium'
                           : 'text-gray-900 hover:bg-gray-50'
                       }
                     `}
