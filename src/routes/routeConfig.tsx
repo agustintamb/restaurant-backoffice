@@ -13,7 +13,7 @@ import Ingredients from '@/pages/Ingredients';
 import Allergens from '@/pages/Allergens';
 import Categories from '@/pages/Categories';
 import Subcategories from '@/pages/Subcategories';
-//import Dishes from '@/pages/Dishes';
+import Dishes from '@/pages/Dishes';
 
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
@@ -46,7 +46,7 @@ export const routeConfig: RouteObject[] = [
       { path: 'alergenos', element: withSuspense(Allergens) },
       { path: 'categorias', element: withSuspense(Categories) },
       { path: 'subcategorias', element: withSuspense(Subcategories) },
-      //{ path: 'platos', element: withSuspense(Dishes) },
+      { path: 'platos', element: withSuspense(Dishes) },
     ],
   },
 

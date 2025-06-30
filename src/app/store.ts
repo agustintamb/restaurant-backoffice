@@ -6,7 +6,7 @@ import allergen from '@/features/allergen';
 import ingredient from '@/features/ingredient';
 import category from '@/features/category';
 import subcategory from '@/features/subcategory';
-//import dish from '@/features/dish';
+import dish from '@/features/dish';
 
 export const reducer = combineReducers({
   auth,
@@ -15,7 +15,7 @@ export const reducer = combineReducers({
   ingredient,
   category,
   subcategory,
-  //dish,
+  dish,
 });
 
 const store = configureStore({
