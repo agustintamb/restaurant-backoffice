@@ -4,6 +4,7 @@ import {
   IGetCategoriesResponse,
   IDeleteCategoryResponse,
   ICategoryResponse,
+  IRestoreCategoryResponse,
   GetCategoriesQuery,
   ICreateCategory,
   IUpdateCategory,
@@ -27,6 +28,11 @@ class CategoryService extends ServiceBase {
   deleteCategory = (categoryId: string) =>
     this.client.delete<ResponseType, AxiosResponse<IDeleteCategoryResponse>>(
       `categories/${categoryId}`
+    );
+
+  restoreCategory = (categoryId: string) =>
+    this.client.patch<ResponseType, AxiosResponse<IRestoreCategoryResponse>>(
+      `categories/${categoryId}/restore`
     );
 
   getCategoryById = (categoryId: string) =>

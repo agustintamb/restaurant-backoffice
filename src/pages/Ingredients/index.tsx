@@ -1,4 +1,4 @@
-import { Edit, Trash2, Plus, Search, Eye } from 'lucide-react';
+import { Edit, Trash2, Plus, Search, Eye, RotateCcw } from 'lucide-react';
 import { IIngredient } from '@/interfaces/ingredient';
 import { useAuth } from '@/hooks/useAuth';
 import { useIngredients } from './useIngredients';
@@ -24,18 +24,22 @@ const Ingredients = () => {
     handleCreateIngredient,
     handleEditIngredient,
     handleDeleteIngredient,
+    handleRestoreIngredient,
     handleShowActivity,
     handleCreateIngredientSubmit,
     handleUpdateIngredient,
     confirmDeleteIngredient,
+    confirmRestoreIngredient,
     isCreateModalOpen,
     isEditModalOpen,
     isDeleteModalOpen,
+    isRestoreModalOpen,
     isActivityModalOpen,
     selectedIngredient,
     closeCreateModal,
     closeEditModal,
     closeDeleteModal,
+    closeRestoreModal,
     closeActivityModal,
   } = useIngredients();
 
@@ -116,6 +120,14 @@ const Ingredients = () => {
       show: record => !record.isDeleted,
     },
     {
+      key: 'restore',
+      label: 'Restaurar',
+      icon: <RotateCcw size={16} />,
+      onClick: handleRestoreIngredient,
+      variant: 'success',
+      show: record => record.isDeleted,
+    },
+    {
       key: 'delete',
       label: 'Eliminar',
       icon: <Trash2 size={16} />,
@@ -194,6 +206,19 @@ const Ingredients = () => {
         open={isActivityModalOpen}
         onClose={closeActivityModal}
         entity={selectedIngredient}
+      />
+
+      {/* Restore Confirmation Modal */}
+      <ConfirmationModal
+        open={isRestoreModalOpen}
+        onClose={closeRestoreModal}
+        onConfirm={confirmRestoreIngredient}
+        title="¿Restaurar ingrediente?"
+        message={`¿Estás seguro de que querés restaurar este ingrediente? El elemento volverá a estar disponible.`}
+        confirmText="Restaurar"
+        cancelText="Cancelar"
+        type="info"
+        isLoading={isLoading}
       />
 
       {/* Delete Confirmation Modal */}

@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { isAxiosError } from '@/utils/isAxiosError';
+import { errorMessage } from '@/utils/errorMessage';
 import { IUpdateUserProfile, GetUsersQuery, ICreateUser, IUpdateUser } from '@/interfaces/user';
 import User from '@/service/user';
 
@@ -25,6 +26,7 @@ export const createUser = createAsyncThunk(
       if (data) toast.success('Usuario creado');
       return data.result;
     } catch (error) {
+      toast.error(errorMessage(error));
       if (isAxiosError(error)) return rejectWithValue(error.response?.data);
       return rejectWithValue('An unexpected error occurred');
     }
@@ -39,6 +41,7 @@ export const updateUser = createAsyncThunk(
       if (data) toast.success('Usuario actualizado');
       return data.result;
     } catch (error) {
+      toast.error(errorMessage(error));
       if (isAxiosError(error)) return rejectWithValue(error.response?.data);
       return rejectWithValue('An unexpected error occurred');
     }
@@ -53,6 +56,7 @@ export const deleteUser = createAsyncThunk(
       if (data) toast.success('Usuario eliminado');
       return userId;
     } catch (error) {
+      toast.error(errorMessage(error));
       if (isAxiosError(error)) return rejectWithValue(error.response?.data);
       return rejectWithValue('An unexpected error occurred');
     }
@@ -80,6 +84,7 @@ export const updateUserProfile = createAsyncThunk(
       if (data) toast.success('Perfil actualizado');
       return data;
     } catch (error) {
+      toast.error(errorMessage(error));
       if (isAxiosError(error)) return rejectWithValue(error.response?.data);
       return rejectWithValue('An unexpected error occurred');
     }

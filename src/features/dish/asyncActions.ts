@@ -1,10 +1,9 @@
-// src/features/dish/asyncActions.ts
 import { toast } from 'react-toastify';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { isAxiosError } from '@/utils/isAxiosError';
+import { errorMessage } from '@/utils/errorMessage';
 import { GetDishesQuery, ICreateDish, IUpdateDish } from '@/interfaces/dish';
 import Dish from '@/service/dish';
-import { errorMessage } from '@/utils/errorMessage';
 
 export const getDishes = createAsyncThunk(
   'dish/getDishes',
@@ -27,11 +26,8 @@ export const createDish = createAsyncThunk(
       if (data) toast.success('Plato creado exitosamente');
       return data.result;
     } catch (error) {
-      if (isAxiosError(error)) {
-        toast.error(`Error: ${errorMessage(error)}`);
-        return rejectWithValue(error.response?.data);
-      }
-      toast.error('Error inesperado al crear plato');
+      toast.error(errorMessage(error));
+      if (isAxiosError(error)) return rejectWithValue(error.response?.data);
       return rejectWithValue('An unexpected error occurred');
     }
   }
@@ -48,11 +44,8 @@ export const updateDish = createAsyncThunk(
       if (data) toast.success('Plato actualizado exitosamente');
       return data.result;
     } catch (error) {
-      if (isAxiosError(error)) {
-        toast.error(`Error: ${errorMessage(error)}`);
-        return rejectWithValue(error.response?.data);
-      }
-      toast.error('Error inesperado al actualizar plato');
+      toast.error(errorMessage(error));
+      if (isAxiosError(error)) return rejectWithValue(error.response?.data);
       return rejectWithValue('An unexpected error occurred');
     }
   }
@@ -66,11 +59,23 @@ export const deleteDish = createAsyncThunk(
       if (data) toast.success('Plato eliminado exitosamente');
       return dishId;
     } catch (error) {
-      if (isAxiosError(error)) {
-        toast.error(`Error: ${errorMessage(error)}`);
-        return rejectWithValue(error.response?.data);
-      }
-      toast.error('Error inesperado al eliminar plato');
+      toast.error(errorMessage(error));
+      if (isAxiosError(error)) return rejectWithValue(error.response?.data);
+      return rejectWithValue('An unexpected error occurred');
+    }
+  }
+);
+
+export const restoreDish = createAsyncThunk(
+  'dish/restoreDish',
+  async (dishId: string, { rejectWithValue }) => {
+    try {
+      const { data } = await Dish.restoreDish(dishId);
+      if (data) toast.success('Plato restaurado exitosamente');
+      return data.result;
+    } catch (error) {
+      toast.error(errorMessage(error));
+      if (isAxiosError(error)) return rejectWithValue(error.response?.data);
       return rejectWithValue('An unexpected error occurred');
     }
   }

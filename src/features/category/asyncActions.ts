@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { isAxiosError } from '@/utils/isAxiosError';
+import { errorMessage } from '@/utils/errorMessage';
 import { GetCategoriesQuery, ICreateCategory, IUpdateCategory } from '@/interfaces/category';
 import Category from '@/service/category';
 
@@ -25,6 +26,7 @@ export const createCategory = createAsyncThunk(
       if (data) toast.success('Categoría creada');
       return data.result;
     } catch (error) {
+      toast.error(errorMessage(error));
       if (isAxiosError(error)) return rejectWithValue(error.response?.data);
       return rejectWithValue('An unexpected error occurred');
     }
@@ -42,6 +44,7 @@ export const updateCategory = createAsyncThunk(
       if (data) toast.success('Categoría actualizada');
       return data.result;
     } catch (error) {
+      toast.error(errorMessage(error));
       if (isAxiosError(error)) return rejectWithValue(error.response?.data);
       return rejectWithValue('An unexpected error occurred');
     }
@@ -56,6 +59,22 @@ export const deleteCategory = createAsyncThunk(
       if (data) toast.success('Categoría eliminada');
       return categoryId;
     } catch (error) {
+      toast.error(errorMessage(error));
+      if (isAxiosError(error)) return rejectWithValue(error.response?.data);
+      return rejectWithValue('An unexpected error occurred');
+    }
+  }
+);
+
+export const restoreCategory = createAsyncThunk(
+  'category/restoreCategory',
+  async (categoryId: string, { rejectWithValue }) => {
+    try {
+      const { data } = await Category.restoreCategory(categoryId);
+      if (data) toast.success('Categoría restaurada exitosamente');
+      return data.result;
+    } catch (error) {
+      toast.error(errorMessage(error));
       if (isAxiosError(error)) return rejectWithValue(error.response?.data);
       return rejectWithValue('An unexpected error occurred');
     }

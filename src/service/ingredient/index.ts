@@ -4,6 +4,7 @@ import {
   IGetIngredientsResponse,
   IDeleteIngredientResponse,
   IIngredientResponse,
+  IRestoreIngredientResponse,
   GetIngredientsQuery,
   ICreateIngredient,
   IUpdateIngredient,
@@ -27,6 +28,11 @@ class IngredientService extends ServiceBase {
   deleteIngredient = (ingredientId: string) =>
     this.client.delete<ResponseType, AxiosResponse<IDeleteIngredientResponse>>(
       `ingredients/${ingredientId}`
+    );
+
+  restoreIngredient = (ingredientId: string) =>
+    this.client.patch<ResponseType, AxiosResponse<IRestoreIngredientResponse>>(
+      `ingredients/${ingredientId}/restore`
     );
 
   getIngredientById = (ingredientId: string) =>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertTriangle, Trash2 } from 'lucide-react';
+import { AlertTriangle, Trash2, RotateCcw, Info } from 'lucide-react';
 import Modal from '@/components/ui/Modal';
 import Button from '@/components/ui/Button';
 
@@ -32,8 +32,10 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
         return <Trash2 className="h-6 w-6 text-red-600" />;
       case 'warning':
         return <AlertTriangle className="h-6 w-6 text-yellow-600" />;
+      case 'info':
+        return <RotateCcw className="h-6 w-6 text-blue-600" />;
       default:
-        return <AlertTriangle className="h-6 w-6 text-blue-600" />;
+        return <Info className="h-6 w-6 text-blue-600" />;
     }
   };
 
@@ -43,15 +45,32 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
         return 'danger' as const;
       case 'warning':
         return 'primary' as const;
+      case 'info':
+        return 'primary' as const;
       default:
         return 'primary' as const;
+    }
+  };
+
+  const getBackgroundColor = () => {
+    switch (type) {
+      case 'danger':
+        return 'bg-red-100';
+      case 'warning':
+        return 'bg-yellow-100';
+      case 'info':
+        return 'bg-blue-100';
+      default:
+        return 'bg-blue-100';
     }
   };
 
   return (
     <Modal open={open} onClose={onClose} size="sm" showHeader={false}>
       <div className="text-center">
-        <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+        <div
+          className={`mx-auto flex items-center justify-center h-12 w-12 rounded-full ${getBackgroundColor()} mb-4`}
+        >
           {getIcon()}
         </div>
 

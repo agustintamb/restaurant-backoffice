@@ -1,4 +1,4 @@
-import { Edit, Trash2, Plus, Search, Eye, Grid3X3, Filter } from 'lucide-react';
+import { Edit, Trash2, Plus, Search, Eye, Grid3X3, Filter, RotateCcw } from 'lucide-react';
 import { ISubcategory } from '@/interfaces/subcategory';
 import { useAuth } from '@/hooks/useAuth';
 import { useSubcategories } from './useSubcategories';
@@ -28,18 +28,22 @@ const Subcategories = () => {
     handleCreateSubcategory,
     handleEditSubcategory,
     handleDeleteSubcategory,
+    handleRestoreSubcategory,
     handleShowActivity,
     handleCreateSubcategorySubmit,
     handleUpdateSubcategory,
     confirmDeleteSubcategory,
+    confirmRestoreSubcategory,
     isCreateModalOpen,
     isEditModalOpen,
     isDeleteModalOpen,
+    isRestoreModalOpen,
     isActivityModalOpen,
     selectedSubcategory,
     closeCreateModal,
     closeEditModal,
     closeDeleteModal,
+    closeRestoreModal,
     closeActivityModal,
   } = useSubcategories();
 
@@ -129,6 +133,14 @@ const Subcategories = () => {
       onClick: handleEditSubcategory,
       variant: 'primary',
       show: record => !record.isDeleted,
+    },
+    {
+      key: 'restore',
+      label: 'Restaurar',
+      icon: <RotateCcw size={16} />,
+      onClick: handleRestoreSubcategory,
+      variant: 'success',
+      show: record => record.isDeleted,
     },
     {
       key: 'delete',
@@ -229,6 +241,19 @@ const Subcategories = () => {
         open={isActivityModalOpen}
         onClose={closeActivityModal}
         entity={selectedSubcategory}
+      />
+
+      {/* Restore Confirmation Modal */}
+      <ConfirmationModal
+        open={isRestoreModalOpen}
+        onClose={closeRestoreModal}
+        onConfirm={confirmRestoreSubcategory}
+        title="¿Restaurar subcategoría?"
+        message={`¿Estás seguro de que querés restaurar esta subcategoría? El elemento volverá a estar disponible.`}
+        confirmText="Restaurar"
+        cancelText="Cancelar"
+        type="info"
+        isLoading={isLoading}
       />
 
       {/* Delete Confirmation Modal */}

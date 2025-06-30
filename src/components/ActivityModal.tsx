@@ -7,9 +7,11 @@ interface AuditableEntity {
   createdAt: Date | string;
   updatedAt?: Date | string;
   deletedAt?: Date | string;
+  restoredAt?: Date | string;
   createdBy?: UserReference | string;
   updatedBy?: UserReference | string;
   deletedBy?: UserReference | string;
+  restoredBy?: UserReference | string;
   isDeleted?: boolean;
 }
 
@@ -74,11 +76,20 @@ const ActivityModal: React.FC<ActivityModalProps> = ({ open, onClose, entity }) 
           </div>
 
           {/* Eliminado */}
-          <div className="grid grid-cols-3 gap-4 py-3">
+          <div className="grid grid-cols-3 gap-4 py-3 border-b border-gray-100">
             <div className="text-sm font-medium text-gray-900">Eliminado:</div>
             <div className="text-sm text-gray-700">{formatDate(entity.deletedAt)}</div>
             <div className="text-sm text-gray-500">
               {entity.deletedAt ? getUserName(entity.deletedBy) : '-'}
+            </div>
+          </div>
+
+          {/* Restaurado */}
+          <div className="grid grid-cols-3 gap-4 py-3">
+            <div className="text-sm font-medium text-gray-900">Restaurado:</div>
+            <div className="text-sm text-gray-700">{formatDate(entity.restoredAt)}</div>
+            <div className="text-sm text-gray-500">
+              {entity.restoredAt ? getUserName(entity.restoredBy) : '-'}
             </div>
           </div>
         </div>

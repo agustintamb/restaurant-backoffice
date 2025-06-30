@@ -4,6 +4,7 @@ import {
   IGetSubcategoriesResponse,
   IDeleteSubcategoryResponse,
   ISubcategoryResponse,
+  IRestoreSubcategoryResponse,
   GetSubcategoriesQuery,
   ICreateSubcategory,
   IUpdateSubcategory,
@@ -27,6 +28,11 @@ class SubcategoryService extends ServiceBase {
   deleteSubcategory = (subcategoryId: string) =>
     this.client.delete<ResponseType, AxiosResponse<IDeleteSubcategoryResponse>>(
       `subcategories/${subcategoryId}`
+    );
+
+  restoreSubcategory = (subcategoryId: string) =>
+    this.client.patch<ResponseType, AxiosResponse<IRestoreSubcategoryResponse>>(
+      `subcategories/${subcategoryId}/restore`
     );
 
   getSubcategoryById = (subcategoryId: string) =>

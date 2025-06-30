@@ -11,6 +11,8 @@ export interface ISubcategory {
   updatedAt: Date;
   deletedBy?: IUser | string;
   deletedAt?: Date;
+  restoredBy?: IUser | string;
+  restoredAt?: Date;
   isDeleted: boolean;
 }
 
@@ -54,4 +56,9 @@ export interface PaginatedSubcategoriesResult {
 
 export interface IDeleteSubcategoryResponse {
   message: string;
+}
+
+export interface IRestoreSubcategoryResponse {
+  message: string;
+  result: ISubcategory;
 }

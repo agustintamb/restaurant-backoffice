@@ -6,6 +6,7 @@ import {
   createIngredient,
   updateIngredient,
   deleteIngredient,
+  restoreIngredient,
 } from '@/features/ingredient/asyncActions';
 import {
   GetIngredientsQuery,
@@ -23,6 +24,7 @@ export const useIngredients = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isRestoreModalOpen, setIsRestoreModalOpen] = useState(false);
   const [isActivityModalOpen, setIsActivityModalOpen] = useState(false);
   const [selectedIngredient, setSelectedIngredient] = useState<IIngredient | null>(null);
 
@@ -120,6 +122,24 @@ export const useIngredients = () => {
     setSelectedIngredient(null);
   };
 
+  const handleRestoreIngredient = (ingredient: IIngredient) => {
+    setSelectedIngredient(ingredient);
+    setIsRestoreModalOpen(true);
+  };
+
+  const confirmRestoreIngredient = async () => {
+    if (!selectedIngredient) return;
+    await dispatch(restoreIngredient(selectedIngredient._id)).unwrap();
+    setIsRestoreModalOpen(false);
+    setSelectedIngredient(null);
+    fetchIngredients();
+  };
+
+  const closeRestoreModal = () => {
+    setIsRestoreModalOpen(false);
+    setSelectedIngredient(null);
+  };
+
   const refreshIngredients = () => fetchIngredients();
 
   useEffect(() => {
@@ -155,21 +175,25 @@ export const useIngredients = () => {
     handleCreateIngredient,
     handleEditIngredient,
     handleDeleteIngredient,
+    handleRestoreIngredient,
     handleShowActivity,
     handleCreateIngredientSubmit,
     handleUpdateIngredient,
     confirmDeleteIngredient,
+    confirmRestoreIngredient,
     refreshIngredients,
 
     // Modal states
     isCreateModalOpen,
     isEditModalOpen,
     isDeleteModalOpen,
+    isRestoreModalOpen,
     isActivityModalOpen,
     selectedIngredient,
     closeCreateModal,
     closeEditModal,
     closeDeleteModal,
+    closeRestoreModal,
     closeActivityModal,
   };
 };

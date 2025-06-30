@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { isAxiosError } from '@/utils/isAxiosError';
+import { errorMessage } from '@/utils/errorMessage';
 import { GetAllergensQuery, ICreateAllergen, IUpdateAllergen } from '@/interfaces/allergen';
 import Allergen from '@/service/allergen';
 
@@ -25,6 +26,7 @@ export const createAllergen = createAsyncThunk(
       if (data) toast.success('Alérgeno creado');
       return data.result;
     } catch (error) {
+      toast.error(errorMessage(error));
       if (isAxiosError(error)) return rejectWithValue(error.response?.data);
       return rejectWithValue('An unexpected error occurred');
     }
@@ -42,6 +44,7 @@ export const updateAllergen = createAsyncThunk(
       if (data) toast.success('Alérgeno actualizado');
       return data.result;
     } catch (error) {
+      toast.error(errorMessage(error));
       if (isAxiosError(error)) return rejectWithValue(error.response?.data);
       return rejectWithValue('An unexpected error occurred');
     }
@@ -56,6 +59,7 @@ export const deleteAllergen = createAsyncThunk(
       if (data) toast.success('Alérgeno eliminado');
       return allergenId;
     } catch (error) {
+      toast.error(errorMessage(error));
       if (isAxiosError(error)) return rejectWithValue(error.response?.data);
       return rejectWithValue('An unexpected error occurred');
     }
@@ -70,6 +74,22 @@ export const getAllergenById = createAsyncThunk(
       return data.result;
     } catch (error) {
       if (isAxiosError(error)) return rejectWithValue(error.response?.data);
+      return rejectWithValue('An unexpected error occurred');
+    }
+  }
+);
+
+export const restoreAllergen = createAsyncThunk(
+  'allergen/restoreAllergen',
+  async (allergenId: string, { rejectWithValue }) => {
+    try {
+      const { data } = await Allergen.restoreAllergen(allergenId);
+      if (data) toast.success('Alérgeno restaurado exitosamente');
+      return data.result;
+    } catch (error) {
+      toast.error(errorMessage(error));
+      if (isAxiosError(error)) return rejectWithValue(error.response?.data);
+      toast.error('Error inesperado al restaurar alérgeno');
       return rejectWithValue('An unexpected error occurred');
     }
   }

@@ -1,4 +1,4 @@
-import { Edit, Trash2, Plus, Search, Eye, Grid } from 'lucide-react';
+import { Edit, Trash2, Plus, Search, Eye, Grid, RotateCcw } from 'lucide-react';
 import { ICategory } from '@/interfaces/category';
 import { useAuth } from '@/hooks/useAuth';
 import { useCategories } from './useCategories';
@@ -24,18 +24,22 @@ const Categories = () => {
     handleCreateCategory,
     handleEditCategory,
     handleDeleteCategory,
+    handleRestoreCategory,
     handleShowActivity,
     handleCreateCategorySubmit,
     handleUpdateCategory,
     confirmDeleteCategory,
+    confirmRestoreCategory,
     isCreateModalOpen,
     isEditModalOpen,
     isDeleteModalOpen,
+    isRestoreModalOpen,
     isActivityModalOpen,
     selectedCategory,
     closeCreateModal,
     closeEditModal,
     closeDeleteModal,
+    closeRestoreModal,
     closeActivityModal,
   } = useCategories();
 
@@ -130,6 +134,14 @@ const Categories = () => {
       show: record => !record.isDeleted,
     },
     {
+      key: 'restore',
+      label: 'Restaurar',
+      icon: <RotateCcw size={16} />,
+      onClick: handleRestoreCategory,
+      variant: 'success',
+      show: record => record.isDeleted,
+    },
+    {
       key: 'delete',
       label: 'Eliminar',
       icon: <Trash2 size={16} />,
@@ -208,6 +220,18 @@ const Categories = () => {
         open={isActivityModalOpen}
         onClose={closeActivityModal}
         entity={selectedCategory}
+      />
+
+      <ConfirmationModal
+        open={isRestoreModalOpen}
+        onClose={closeRestoreModal}
+        onConfirm={confirmRestoreCategory}
+        title="¿Restaurar categoría?"
+        message={`¿Estás seguro de que querés restaurar esta categoría? El elemento volverá a estar disponible.`}
+        confirmText="Restaurar"
+        cancelText="Cancelar"
+        type="info"
+        isLoading={isLoading}
       />
 
       {/* Delete Confirmation Modal */}

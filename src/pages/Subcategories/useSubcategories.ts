@@ -6,6 +6,7 @@ import {
   createSubcategory,
   updateSubcategory,
   deleteSubcategory,
+  restoreSubcategory,
 } from '@/features/subcategory/asyncActions';
 import { getCategories } from '@/features/category/asyncActions';
 import {
@@ -26,6 +27,7 @@ export const useSubcategories = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isRestoreModalOpen, setIsRestoreModalOpen] = useState(false);
   const [isActivityModalOpen, setIsActivityModalOpen] = useState(false);
   const [selectedSubcategory, setSelectedSubcategory] = useState<ISubcategory | null>(null);
 
@@ -147,6 +149,24 @@ export const useSubcategories = () => {
     setSelectedSubcategory(null);
   };
 
+  const handleRestoreSubcategory = (subcategory: ISubcategory) => {
+    setSelectedSubcategory(subcategory);
+    setIsRestoreModalOpen(true);
+  };
+
+  const confirmRestoreSubcategory = async () => {
+    if (!selectedSubcategory) return;
+    await dispatch(restoreSubcategory(selectedSubcategory._id)).unwrap();
+    setIsRestoreModalOpen(false);
+    setSelectedSubcategory(null);
+    fetchSubcategories();
+  };
+
+  const closeRestoreModal = () => {
+    setIsRestoreModalOpen(false);
+    setSelectedSubcategory(null);
+  };
+
   const refreshSubcategories = () => fetchSubcategories();
 
   useEffect(() => {
@@ -185,21 +205,25 @@ export const useSubcategories = () => {
     handleCreateSubcategory,
     handleEditSubcategory,
     handleDeleteSubcategory,
+    handleRestoreSubcategory,
     handleShowActivity,
     handleCreateSubcategorySubmit,
     handleUpdateSubcategory,
     confirmDeleteSubcategory,
+    confirmRestoreSubcategory,
     refreshSubcategories,
 
     // Modal states
     isCreateModalOpen,
     isEditModalOpen,
     isDeleteModalOpen,
+    isRestoreModalOpen,
     isActivityModalOpen,
     selectedSubcategory,
     closeCreateModal,
     closeEditModal,
     closeDeleteModal,
+    closeRestoreModal,
     closeActivityModal,
   };
 };

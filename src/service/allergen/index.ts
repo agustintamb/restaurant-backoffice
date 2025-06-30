@@ -4,6 +4,7 @@ import {
   IGetAllergensResponse,
   IDeleteAllergenResponse,
   IAllergenResponse,
+  IRestoreAllergenResponse,
   GetAllergensQuery,
   ICreateAllergen,
   IUpdateAllergen,
@@ -25,6 +26,11 @@ class AllergenService extends ServiceBase {
   deleteAllergen = (allergenId: string) =>
     this.client.delete<ResponseType, AxiosResponse<IDeleteAllergenResponse>>(
       `allergens/${allergenId}`
+    );
+
+  restoreAllergen = (allergenId: string) =>
+    this.client.patch<ResponseType, AxiosResponse<IRestoreAllergenResponse>>(
+      `allergens/${allergenId}/restore`
     );
 
   getAllergenById = (allergenId: string) =>
