@@ -100,7 +100,7 @@ const Categories = () => {
         <div className="flex justify-start">
           <button
             onClick={() => handleShowActivity(record)}
-            className="p-1 text-gray-400 hover:text-blue-600 transition-colors"
+            className="p-1 text-gray-400 hover:text-primary-600 transition-colors"
             title="Ver detalles de actividad"
           >
             <Eye size={14} />

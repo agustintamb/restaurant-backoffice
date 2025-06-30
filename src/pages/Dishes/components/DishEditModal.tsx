@@ -301,7 +301,7 @@ const DishEditModal = ({
                     value={formik.values.description}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    className={`w-full px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 ${
+                    className={`w-full px-3 py-2 border rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 ${
                       formik.touched.description && formik.errors.description
                         ? 'border-red-300 focus:border-red-500'
                         : 'border-gray-300'
@@ -388,7 +388,7 @@ const DishEditModal = ({
                             <button
                               type="button"
                               onClick={restoreOriginalImage}
-                              className="p-1 bg-blue-500 text-white rounded-full hover:bg-blue-600 text-xs"
+                              className="p-1 bg-primary-500 text-white rounded-full hover:bg-primary-600 text-xs"
                               title="Restaurar imagen original"
                             >
                               ↺

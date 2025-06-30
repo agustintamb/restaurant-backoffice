@@ -33,9 +33,9 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
       case 'warning':
         return <AlertTriangle className="h-6 w-6 text-yellow-600" />;
       case 'info':
-        return <RotateCcw className="h-6 w-6 text-blue-600" />;
+        return <RotateCcw className="h-6 w-6 text-primary-600" />;
       default:
-        return <Info className="h-6 w-6 text-blue-600" />;
+        return <Info className="h-6 w-6 text-primary-600" />;
     }
   };
 
@@ -59,9 +59,9 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
       case 'warning':
         return 'bg-yellow-100';
       case 'info':
-        return 'bg-blue-100';
+        return 'bg-primary-100';
       default:
-        return 'bg-blue-100';
+        return 'bg-primary-100';
     }
   };
 

@@ -62,8 +62,8 @@ const Subcategories = () => {
       title: 'Nombre',
       render: value => (
         <div className="flex items-center">
-          <div className="flex-shrink-0 h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-            <Grid3X3 size={16} className="text-blue-600" />
+          <div className="flex-shrink-0 h-8 w-8 bg-primary-100 rounded-full flex items-center justify-center mr-3">
+            <Grid3X3 size={16} className="text-primary-600" />
           </div>
           <span className="text-sm font-medium text-gray-900">{value}</span>
         </div>
@@ -101,7 +101,7 @@ const Subcategories = () => {
         <div className="flex justify-start">
           <button
             onClick={() => handleShowActivity(record)}
-            className="p-1 text-gray-400 hover:text-blue-600 transition-colors"
+            className="p-1 text-gray-400 hover:text-primary-600 transition-colors"
             title="Ver detalles de actividad"
           >
             <Eye size={14} />

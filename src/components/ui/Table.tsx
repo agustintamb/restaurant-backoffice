@@ -99,7 +99,7 @@ const Table = <T extends Record<string, any>>({
   const getActionStyles = (variant?: string) => {
     switch (variant) {
       case 'primary':
-        return 'text-blue-600 hover:bg-blue-50';
+        return 'text-primary-600 hover:bg-primary-50';
       case 'danger':
         return 'text-red-600 hover:bg-red-50';
       case 'success':
@@ -124,7 +124,7 @@ const Table = <T extends Record<string, any>>({
     return (
       <div className={`bg-white rounded-lg shadow-md overflow-hidden ${className}`}>
         <div className="p-8 text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 mx-auto"></div>
           <p className="mt-2 text-gray-500">Cargando...</p>
         </div>
       </div>
@@ -260,7 +260,7 @@ const Table = <T extends Record<string, any>>({
                       onClick={() => pagination.onPageChange(pageNumber)}
                       className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
                         pageNumber === pagination.currentPage
-                          ? 'z-10 bg-blue-50 border-blue-500 text-blue-600'
+                          ? 'z-10 bg-primary-50 border-primary-500 text-primary-600'
                           : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
                       }`}
                     >
