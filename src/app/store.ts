@@ -7,6 +7,7 @@ import ingredient from '@/features/ingredient';
 import category from '@/features/category';
 import subcategory from '@/features/subcategory';
 import dish from '@/features/dish';
+import dashboard from '@/features/dashboard';
 
 export const reducer = combineReducers({
   auth,
@@ -16,6 +17,7 @@ export const reducer = combineReducers({
   category,
   subcategory,
   dish,
+  dashboard,
 });
 
 const store = configureStore({
