@@ -26,6 +26,7 @@ export const useContacts = () => {
   const {
     contacts = [],
     totalContacts = 0,
+    totalUnread = 0,
     totalPages = 0,
     hasNextPage = false,
     hasPrevPage = false,
@@ -130,6 +131,7 @@ export const useContacts = () => {
   return {
     // Data
     contacts,
+    totalUnread,
     isLoading,
 
     // Filters
