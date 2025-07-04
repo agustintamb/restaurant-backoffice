@@ -6,7 +6,11 @@ import { useAuth } from '@/hooks/useAuth';
 import { useHeader } from './useHeader';
 import MobileMenu from './MobileMenu';
 
-const Header = () => {
+interface HeaderProps {
+  hasNewMessages?: boolean;
+}
+
+const Header = ({ hasNewMessages = false }: HeaderProps) => {
   const { currentUser, handleLogout } = useAuth();
   const { isMobileMenuOpen, handleMobileMenuToggle, handleMobileMenuClose } = useHeader();
   return (
@@ -14,15 +18,42 @@ const Header = () => {
       <header className="bg-gray-50 fixed top-0 left-0 w-full z-50 border-b border-gray-200">
         <nav className="px-4 sm:px-6 py-4">
           <div className="flex justify-between items-center">
-            {/*<div className="flex items-center">*/}
-            {/* Botón hamburguesa */}
-            <button
-              onClick={handleMobileMenuToggle}
-              className="p-2 rounded-md text-gray-700 hover:text-primary-600 hover:bg-gray-100 transition-colors mr-3"
-              aria-label="Abrir menú"
-            >
-              <Menu size={24} />
-            </button>
+            {/* Botón hamburguesa con notificación */}
+            <div className="relative">
+              <button
+                onClick={handleMobileMenuToggle}
+                className="p-2 rounded-md text-gray-700 hover:text-primary-600 hover:bg-gray-100 transition-colors mr-3"
+                aria-label="Abrir menú"
+              >
+                <Menu size={24} />
+              </button>
+
+              {/* Indicador de notificación */}
+              {hasNewMessages && (
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 500,
+                    damping: 15,
+                  }}
+                  className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 rounded-full border-2 border-white flex items-center justify-center"
+                >
+                  <motion.div
+                    animate={{
+                      scale: [1, 1.2, 1],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                    }}
+                    className="h-2 w-2 bg-white rounded-full"
+                  />
+                </motion.div>
+              )}
+            </div>
 
             {/* Logo */}
             <Link
@@ -33,7 +64,6 @@ const Header = () => {
               <ChefHat size={24} />
             </Link>
           </div>
-          {/*</div>*/}
         </nav>
       </header>
 
