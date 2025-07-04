@@ -21,6 +21,20 @@ const Dashboard = () => {
       data: dashboardData?.users,
     },
     {
+      title: 'Categorías',
+      icon: <FolderOpen />,
+      color: 'green' as const,
+      route: ROUTES.CATEGORIES,
+      data: dashboardData?.categories,
+    },
+    {
+      title: 'Subcategorías',
+      icon: <Tag />,
+      color: 'yellow' as const,
+      route: ROUTES.SUBCATEGORIES,
+      data: dashboardData?.subcategories,
+    },
+    {
       title: 'Ingredientes',
       icon: <Package />,
       color: 'purple' as const,
@@ -40,20 +54,6 @@ const Dashboard = () => {
       color: 'blue' as const,
       route: ROUTES.DISHES,
       data: dashboardData?.dishes,
-    },
-    {
-      title: 'Categorías',
-      icon: <FolderOpen />,
-      color: 'green' as const,
-      route: ROUTES.CATEGORIES,
-      data: dashboardData?.categories,
-    },
-    {
-      title: 'Subcategorías',
-      icon: <Tag />,
-      color: 'yellow' as const,
-      route: ROUTES.SUBCATEGORIES,
-      data: dashboardData?.subcategories,
     },
   ];
 

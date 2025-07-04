@@ -29,6 +29,13 @@ export interface IDashboardStats {
     active: number;
     deleted: number;
   };
+  contacts: {
+    active: number;
+    deleted: number;
+    read: number;
+    total: number;
+    unread: number;
+  };
 }
 
 export interface IDashboardStatsResponse {

@@ -8,6 +8,7 @@ import category from '@/features/category';
 import subcategory from '@/features/subcategory';
 import dish from '@/features/dish';
 import dashboard from '@/features/dashboard';
+import contact from '@/features/contact';
 
 export const reducer = combineReducers({
   auth,
@@ -18,6 +19,7 @@ export const reducer = combineReducers({
   subcategory,
   dish,
   dashboard,
+  contact,
 });
 
 const store = configureStore({

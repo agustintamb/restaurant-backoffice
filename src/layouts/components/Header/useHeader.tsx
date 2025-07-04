@@ -1,7 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { ROUTES } from '@/utils/constants';
-import { MenuItem } from './header.interface';
 import {
   Home,
   Users,
@@ -11,13 +8,27 @@ import {
   WheatOff,
   Salad,
   Pizza,
+  Mail,
 } from 'lucide-react';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { ROUTES } from '@/utils/constants';
+import { MenuItem } from './header.interface';
+import { selectorContact } from '@/features/contact/slice';
 
 export const useHeader = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { contactsData } = useSelector(selectorContact);
 
   const menuItems: MenuItem[] = [
+    {
+      id: 'contacts',
+      label: 'Contacto',
+      icon: <Mail size={20} />,
+      path: ROUTES.CONTACTS,
+      badge: contactsData?.totalUnread || undefined,
+    },
     {
       id: 'dashboard',
       label: 'Dashboard',

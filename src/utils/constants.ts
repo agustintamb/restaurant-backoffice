@@ -11,5 +11,6 @@ export enum ROUTES {
   CATEGORIES = '/categorias',
   SUBCATEGORIES = '/subcategorias',
   DISHES = '/platos',
+  CONTACTS = '/contacto',
   NOT_FOUND = '/*',
 }
