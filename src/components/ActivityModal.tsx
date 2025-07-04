@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from '@/components/ui/Modal';
+import { formatDate } from '@/utils/date';
 
 // Interface genérica para cualquier entidad con campos de auditoría
 interface AuditableEntity {
@@ -31,17 +32,6 @@ interface ActivityModalProps {
 
 const ActivityModal: React.FC<ActivityModalProps> = ({ open, onClose, entity }) => {
   if (!entity) return null;
-
-  const formatDate = (date: Date | string | undefined) => {
-    if (!date) return '-';
-    return new Date(date).toLocaleString('es-ES', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
 
   const getUserName = (userRef: UserReference | string | undefined) => {
     if (!userRef) return '-';
