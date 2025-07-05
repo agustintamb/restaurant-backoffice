@@ -1,54 +1,117 @@
-# React + TypeScript + Vite
+# 🍽️ Bodegón Argentino - Backoffice
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sistema de gestión y administración para el restaurante **Bodegón Argentino**. Una aplicación web desarrollada con React, TypeScript y Vite que permite administrar todos los aspectos del restaurante desde un panel de control intuitivo.
 
-Currently, two official plugins are available:
+## ✨ Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Dashboard principal** con estadísticas y resumen del restaurante
+- **Gestión de platos** - Crear, editar y administrar el menú
+- **Categorías y subcategorías** - Organizar el menú de forma estructurada
+- **Ingredientes y alérgenos** - Control completo de componentes de los platos
+- **Gestión de usuarios** - Administrar el personal del restaurante
+- **Sistema de contacto** - Gestionar mensajes y consultas
+- **Autenticación** - Sistema de login seguro
+- **Interfaz responsive** - Funciona en desktop y móviles
 
-## Expanding the ESLint configuration
+## 🛠️ Tecnologías
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React 18** - Framework principal
+- **TypeScript** - Tipado estático
+- **Vite** - Build tool y servidor de desarrollo
+- **Redux Toolkit** - Gestión de estado
+- **React Router** - Navegación
+- **Tailwind CSS** - Estilos
+- **Framer Motion** - Animaciones
+- **Axios** - Cliente HTTP
+- **Formik & Yup** - Formularios y validaciones
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 🚀 Instalación
+
+1. **Clonar el repositorio**
+
+   ```bash
+   git clone <url-del-repositorio>
+   cd restaurant-backoffice
+   ```
+
+2. **Instalar dependencias**
+
+   ```bash
+   npm install
+   ```
+
+3. **Configurar variables de entorno**
+   Crear un archivo `.env` en la raíz del proyecto:
+
+   ```env
+   VITE_API_URL=http://localhost:3000/api
+   VITE_BASE_URL=http://localhost:5174
+   ```
+
+4. **Ejecutar en desarrollo**
+   ```bash
+   npm run dev
+   ```
+   La aplicación estará disponible en `http://localhost:5174`
+
+## 📝 Scripts disponibles
+
+```bash
+npm run dev          # Servidor de desarrollo
+npm run build        # Build para producción
+npm run preview      # Preview del build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📂 Estructura del proyecto
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
 ```
+src/
+├── components/     # Componentes reutilizables
+├── features/      # Gestión de estado (Redux slices)
+├── pages/         # Páginas principales
+├── layouts/       # Layouts de la aplicación
+├── hooks/         # Custom hooks
+├── interfaces/    # Tipos TypeScript
+├── service/       # Servicios API
+├── utils/         # Utilidades y constantes
+└── routes/        # Configuración de rutas
+```
+
+## 🎯 Módulos principales
+
+### Dashboard
+
+Panel principal con estadísticas generales del restaurante y acceso rápido a todas las secciones.
+
+### Gestión de Platos
+
+- Crear y editar platos del menú
+- Asignar categorías, subcategorías, ingredientes y alérgenos
+- Subir imágenes de los platos
+- Gestionar precios y descripciones
+
+### Categorías y Subcategorías
+
+- Organizar el menú de forma jerárquica
+- Crear, editar y eliminar categorías
+- Gestionar subcategorías asociadas
+
+### Ingredientes y Alérgenos
+
+- Mantener un catálogo completo de ingredientes
+- Gestionar información de alérgenos
+- Asociar ingredientes y alérgenos a los platos
+
+### Usuarios
+
+- Gestionar usuarios del sistema
+- Información de perfil
+
+## 🔐 Autenticación
+
+El sistema incluye un sistema de autenticación completo con:
+
+- Login seguro
+- Rutas protegidas
+- Gestión de sesiones
+- Perfiles de usuario
